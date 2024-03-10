@@ -19,12 +19,7 @@ export class RegisterUserDto {
     //evalua que sea un correo valido
     if (!regularExps.email.test(email)) return ['Invalid email'];
     if (!password) return ['Missing password'];
-    if (password.length < 6) return ['Password must be at least 8 characters'];
-
-
-
-
-
+    if (password.length < 6) return ['Password must be at least 6 characters'];
 
 
 
