@@ -6,16 +6,18 @@ import { regularExps } from "../../../config";
 export class RegisterUserDto {
   //private contructor solo se puede llamar dentro de un metodo estatico
   private constructor(
-    public readonly name: string,
+    public readonly username: string,
     public readonly email: string,
     public readonly password: string,
   ) { }
 
   static create(object: { [key: string]: any }): [string?, RegisterUserDto?] {
-    const { name, email, password } = object;
+    const { username, email, password } = object;
 
-    if (!name) return ['Missing name'];
+
+
     if (!email) return ['Missing email'];
+    if (!username) return ['Missing nameee'];
     //evalua que sea un correo valido
     if (!regularExps.email.test(email)) return ['Invalid email'];
     if (!password) return ['Missing password'];
@@ -23,6 +25,6 @@ export class RegisterUserDto {
 
 
 
-    return [undefined, new RegisterUserDto(name, email, password)];
+    return [undefined, new RegisterUserDto(username, email, password)];
   }
 }

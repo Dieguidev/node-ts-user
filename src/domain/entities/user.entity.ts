@@ -6,7 +6,7 @@ export class UserEntity {
 
   constructor(
     public id: string,
-    public name: string,
+    public username: string,
     public email: string,
     public emaailValidated: boolean,
     public password: string,
@@ -17,7 +17,7 @@ export class UserEntity {
   static fromJson(object: { [key: string]: any }): UserEntity {
     const {
       id, _id,
-      name,
+      username,
       email,
       emailValidated,
       password,
@@ -25,7 +25,7 @@ export class UserEntity {
       img } = object;
 
     if (!id && !_id) throw CustomError.badRequest('Missing ID');
-    if (!name) throw CustomError.badRequest('Missing name');
+    if (!username) throw CustomError.badRequest('Missing username');
     if (!email) throw CustomError.badRequest('Missing email');
     if (emailValidated=== undefined) throw CustomError.badRequest('Missing email validated');
     if (!password) throw CustomError.badRequest('Missing password');
@@ -33,7 +33,7 @@ export class UserEntity {
 
     return new UserEntity(
       id || _id,
-      name,
+      username,
       email,
       emailValidated,
       password,
