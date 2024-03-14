@@ -29,9 +29,11 @@ export class AuthService {
 
       const { password, ...userEntity } = UserEntity.fromJson(user)
 
+      const token = await this.generateTokenService(user.id)
+
       return {
         user: userEntity,
-        token: 'ABC'
+        token
       }
 
     } catch (error) {
@@ -55,17 +57,23 @@ export class AuthService {
 
     const { password, ...userEntity } = UserEntity.fromJson(user)
 
-    const token = await JwtAdapter.generateToken({
-      id: user.id,
-    })
+    const token = await this.generateTokenService(user.id)
 
-    if (!token) {
-      throw CustomError.internalServer('Error generating token')
-    }
+
 
     return {
       user: userEntity,
       token: token
     }
+  }
+
+
+  //metodo para genrar token
+  async generateTokenService(id: string) {
+    const token = await JwtAdapter.generateToken({ id })
+    if (!token) {
+      throw CustomError.internalServer('Error generating token')
+    }
+    return token
   }
 }
