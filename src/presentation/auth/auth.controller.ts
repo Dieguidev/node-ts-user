@@ -11,16 +11,16 @@ export class AuthController {
     public readonly authService: AuthService
   ) { }
 
-    //metodo para manejo de errores enviados desde el AuthSerevice
-    private handleError = (error: any, res: Response) => {
-      if (error instanceof CustomError) {
-        return res.status(error.statusCode).json({error: error.message})
-      }
-
-      console.log(`${error}`);
-
-      return res.status(500).json({error: 'Internal Server Error'})
+  //metodo para manejo de errores enviados desde el AuthSerevice
+  private handleError = (error: any, res: Response) => {
+    if (error instanceof CustomError) {
+      return res.status(error.statusCode).json({ error: error.message })
     }
+
+    console.log(`${error}`);
+
+    return res.status(500).json({ error: 'Internal Server Error' })
+  }
 
 
   loginUser = (req: Request, res: Response) => {
@@ -48,7 +48,13 @@ export class AuthController {
 
 
   validateEmail = (req: Request, res: Response) => {
-    res.json('validateEmail')
+    const { token } = req.params;
+
+    this.authService.validateEmail(token)
+      .then(() => res.json('Email validated'))
+      .catch((error) => this.handleError(error, res));
+
+
   }
 
 }

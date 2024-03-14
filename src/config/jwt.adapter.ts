@@ -10,7 +10,7 @@ export class JwtAdapter {
     return new Promise((resolve) => {
       jwt.sign(payload, envs.JWT_SECRET, { expiresIn: duration }, (err, token) => {
 
-        if (err) resolve(null)
+        if (err) return resolve(null)
 
         resolve(token)
 
@@ -23,7 +23,15 @@ export class JwtAdapter {
 
 
   static validateToken(token: string) {
+    return new Promise((resolve) => {
 
+      jwt.verify(token, envs.JWT_SECRET, (err, decoded) => {
+        if (err) return resolve(null);
+        resolve(decoded);
+
+
+      })
+    })
   }
 
 }
