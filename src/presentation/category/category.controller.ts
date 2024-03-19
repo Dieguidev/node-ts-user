@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { CreateCategoryDto, CustomError } from "../../domain";
+import { CategoryService } from "../services/category.service";
 
 
 
@@ -8,6 +9,7 @@ export class CategoryController {
 
   // DI
   constructor(
+    private readonly categoryService: CategoryService,
   ) { }
 
   //metodo para manejo de errores enviados desde el Service
@@ -24,21 +26,28 @@ export class CategoryController {
 
 
 
-  createCategory = async (req: Request, res: Response) => {
-    // const [error, createCategoryDto] = CreateCategoryDto.create(req.body);
-    // if(error) return res.status(400).json({error});
+  createCategory = (req: Request, res: Response) => {
+    const [error, createCategoryDto] = CreateCategoryDto.create(req.body);
+    if (error) return res.status(400).json({ error });
 
-    // res.json(createCategoryDto);
-    res.json(req.body)
+    this.categoryService.createCategory(createCategoryDto!, req.body.user)
+      .then(category => res.status(201).json(category))
+      .catch(error => this.handleError(error, res));
+
+
   }
 
 
   getAllCategories = async (req: Request, res: Response) => {
-    res.json('get categoria')
+    this.categoryService.getAllCategories()
+      .then(categories => res.status(200).json(categories))
+      .catch(error => this.handleError(error, res));
+
   }
-
-
-
-
-
 }
+
+
+
+
+
+

@@ -30,7 +30,7 @@ export class CustomError extends Error {
   }
 
 
-  static internalServer(message: string){
+  static internalServer(message: string= 'Internal Server Error'){
     console.log(message);
 
     return new CustomError(500, message);
