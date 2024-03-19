@@ -23,6 +23,8 @@ export class AuthMiddleware {
       const user = await UserModel.findById(payload.id);
       if (!user) return res.status(401).json({ error: 'Invalid token' });
 
+      //todo: validar si el usuario esta activo
+
       req.body.user = UserEntity.fromJson(user);
       next();
 
