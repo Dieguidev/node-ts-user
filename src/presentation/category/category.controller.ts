@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { CustomError } from "../../domain";
+import { CreateCategoryDto, CustomError } from "../../domain";
 
 
 
@@ -10,7 +10,7 @@ export class CategoryController {
   constructor(
   ) { }
 
-  //metodo para manejo de errores enviados desde el AuthSerevice
+  //metodo para manejo de errores enviados desde el Service
   private handleError = (error: any, res: Response) => {
     if (error instanceof CustomError) {
       return res.status(error.statusCode).json({ error: error.message })
@@ -25,7 +25,10 @@ export class CategoryController {
 
 
   createCategory = async (req: Request, res: Response) => {
-    res.json('crear categoria')
+    const [error, createCategoryDto] = CreateCategoryDto.create(req.body);
+    if(error) return res.status(400).json({error});
+
+    res.json(createCategoryDto);
   }
 
 
