@@ -63,7 +63,7 @@ export class CategoryService {
         page,
         limit,
         total: total,
-        next: `/api/categories?page=${page + 1}&limit=${limit}`,
+        next: (total - (page * limit)) > 0 ? `/api/categories?page=${page + 1}&limit=${limit}` : null,
         prev: (page - 1 > 0) ? `/api/categories?page=${page - 1}&limit=${limit}` : null,
         categories: listCategories
       };
