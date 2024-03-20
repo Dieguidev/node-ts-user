@@ -16,6 +16,6 @@ export class CreateCategoryDto {
       availableBoolean = (available === 'true')
     }
 
-    return [undefined, new CreateCategoryDto(name, available)];
+    return [undefined, new CreateCategoryDto(name, availableBoolean)];
   }
 }
