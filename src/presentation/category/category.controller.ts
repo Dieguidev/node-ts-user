@@ -38,8 +38,8 @@ export class CategoryController {
   }
 
 
-  getAllCategories = async (req: Request, res: Response) => {
-    const {page= 1, limit= 10} = req.query;
+  getAllCategories = (req: Request, res: Response) => {
+    const { page = 1, limit = 10 } = req.query;
     const [error, paginationDto] = PaginationDto.create(+page, +limit);
     if (error) return res.status(400).json({ error });
 
